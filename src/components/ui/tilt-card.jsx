@@ -53,10 +53,10 @@ export function TiltCard({
       onPointerLeave={handlePointerLeave}
       className={`will-change-transform relative overflow-hidden ${className}`}
       style={{
+        ...style,
         transform,
         transition: "transform 0.2s ease-out",
         transformStyle: "preserve-3d",
-        ...style,
       }}
     >
       {children}

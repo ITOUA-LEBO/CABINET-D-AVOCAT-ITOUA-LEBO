@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { liquidGlassStyle } from './ui/liquid-glass'
 
 const infos = [
   { icon: MapPin, label: 'Adresse', value: 'Avenue de l\'Indépendance, Brazzaville, Congo' },
@@ -50,10 +51,14 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-4"
           >
             {infos.map((info) => (
-              <div key={info.label} className="flex items-start gap-5">
+              <div
+                key={info.label}
+                className="flex items-start gap-5 p-5 border border-[#d4a843]/20 rounded-xl"
+                style={liquidGlassStyle}
+              >
                 <div className="w-10 h-10 border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0">
                   <info.icon className="w-4 h-4 text-[#d4a843]" />
                 </div>
@@ -64,7 +69,10 @@ export default function Contact() {
               </div>
             ))}
 
-            <div className="pt-8 border-t border-[#d4a843]/10">
+            <div
+              className="p-6 border border-[#d4a843]/20 rounded-xl mt-2"
+              style={liquidGlassStyle}
+            >
               <p className="text-xs tracking-widest uppercase text-[#6b5f4e] mb-4">Barreau de Brazzaville</p>
               <p className="text-[#7a6f60] text-sm leading-relaxed">
                 Maître ITOUA LEBO est membre du Barreau de Brazzaville, Ordre des Avocats de la République du Congo. Assermenté et soumis aux règles déontologiques de la profession.
@@ -80,7 +88,10 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
           >
             {sent ? (
-              <div className="h-full flex flex-col items-center justify-center text-center p-12 border border-[#d4a843]/20">
+              <div
+                className="h-full flex flex-col items-center justify-center text-center p-12 border border-[#d4a843]/20 rounded-xl"
+                style={liquidGlassStyle}
+              >
                 <div className="w-12 h-12 border border-[#d4a843] flex items-center justify-center mb-6">
                   <Send className="w-5 h-5 text-[#d4a843]" />
                 </div>
@@ -88,7 +99,11 @@ export default function Contact() {
                 <p className="text-[#7a6f60] text-sm">Nous vous répondrons dans les 48 heures.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 p-8 border border-[#d4a843]/20 rounded-xl"
+                style={liquidGlassStyle}
+              >
                 <div className="grid grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Nom</label>

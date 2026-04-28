@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FileText, Users, Home, Heart, Briefcase, Scale } from 'lucide-react'
 import { TiltCard } from './ui/tilt-card'
+import { liquidGlassStyle } from './ui/liquid-glass'
 
 const services = [
   {
@@ -75,7 +76,8 @@ export default function Services() {
                 scale={1.03}
                 effect="gravitate"
                 spotlight={true}
-                className="group relative p-8 border border-[#d4a843]/10 hover:border-[#d4a843]/40 bg-[#0d0c08]/80 backdrop-blur-sm transition-colors duration-500 hover:bg-[#0f0e0a] h-full"
+                className="group relative p-8 border border-[#d4a843]/20 hover:border-[#d4a843]/50 transition-colors duration-500 h-full"
+                style={liquidGlassStyle}
               >
                 {/* Corner accent */}
                 <div className="absolute top-0 left-0 w-6 h-px bg-[#d4a843]/60" />
