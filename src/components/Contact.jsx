@@ -11,7 +11,7 @@ const infos = [
     href: 'https://www.google.com/maps/place/Tours+Jumelles+Villarecci/@-4.2758147,15.2809448,17z/data=!3m1!4b1!4m6!3m5!1s0x1a6a33428487d401:0xdcc3498ad8c933cc!8m2!3d-4.2758147!4d15.2835197!16s%2Fg%2F11sbwt08q9?entry=ttu&g_ep=EgoyMDI2MDQyNy4wIKXMDSoASAFQAw%3D%3D',
   },
   { icon: Phone, label: 'Téléphone', value: '+242 069 215 817  ·  +242 055 215 817', href: 'tel:+242069215817' },
-  { icon: Mail, label: 'Email', value: 'contact@itoua-lebo-avocat.cg', href: 'mailto:contact@itoua-lebo-avocat.cg' },
+  { icon: Mail, label: 'Email', value: 'cabinetdavocatlebo@gmail.com', href: 'mailto:cabinetdavocatlebo@gmail.com' },
   { icon: Clock, label: 'Horaires', value: 'Lun–Ven : 9h–18h', href: null },
 ]
 
