@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react'
 import { liquidGlassStyle } from './ui/liquid-glass'
 
 const infos = [
@@ -13,6 +13,7 @@ const infos = [
 export default function Contact() {
   const [form, setForm] = useState({ nom: '', email: '', sujet: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [focused, setFocused] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -22,7 +23,11 @@ export default function Contact() {
   return (
     <section id="contact" className="py-32 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-[#080807] to-[#0a0a0a]" />
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#d4a843]/4 blur-[100px] pointer-events-none" />
+      <motion.div
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#d4a843]/4 blur-[100px] pointer-events-none"
+        animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.8, 0.3] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Header */}
@@ -34,9 +39,21 @@ export default function Contact() {
           className="text-center mb-20"
         >
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-12 bg-[#d4a843]/60" />
+            <motion.div
+              className="h-px bg-[#d4a843]/60"
+              initial={{ width: 0 }}
+              whileInView={{ width: 48 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            />
             <span className="text-[11px] tracking-[0.4em] uppercase text-[#d4a843]">Contact</span>
-            <div className="h-px w-12 bg-[#d4a843]/60" />
+            <motion.div
+              className="h-px bg-[#d4a843]/60"
+              initial={{ width: 0 }}
+              whileInView={{ width: 48 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            />
           </div>
           <h2 className="font-serif text-4xl md:text-5xl text-white font-semibold mb-4">Prendre Rendez-vous</h2>
           <p className="text-[#a89880] max-w-xl mx-auto">
@@ -53,23 +70,36 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            {infos.map((info) => (
-              <div
+            {infos.map((info, i) => (
+              <motion.div
                 key={info.label}
-                className="flex items-start gap-5 p-5 border border-[#d4a843]/20 rounded-xl"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ x: 6 }}
+                className="flex items-start gap-5 p-5 border border-[#d4a843]/20 rounded-xl transition-colors duration-300 hover:border-[#d4a843]/40 cursor-default"
                 style={liquidGlassStyle}
               >
-                <div className="w-10 h-10 border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0">
+                <motion.div
+                  className="w-10 h-10 border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0"
+                  whileHover={{ borderColor: 'rgba(212,168,67,0.7)', scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <info.icon className="w-4 h-4 text-[#d4a843]" />
-                </div>
+                </motion.div>
                 <div>
                   <p className="text-xs tracking-widest uppercase text-[#6b5f4e] mb-1">{info.label}</p>
                   <p className="text-[#c4b89a] text-sm">{info.value}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
 
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.45 }}
               className="p-6 border border-[#d4a843]/20 rounded-xl mt-2"
               style={liquidGlassStyle}
             >
@@ -77,7 +107,7 @@ export default function Contact() {
               <p className="text-[#7a6f60] text-sm leading-relaxed">
                 Maître ITOUA LEBO est membre du Barreau de Brazzaville, Ordre des Avocats de la République du Congo. Assermenté et soumis aux règles déontologiques de la profession.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Form */}
@@ -87,78 +117,124 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {sent ? (
-              <div
-                className="h-full flex flex-col items-center justify-center text-center p-12 border border-[#d4a843]/20 rounded-xl"
-                style={liquidGlassStyle}
-              >
-                <div className="w-12 h-12 border border-[#d4a843] flex items-center justify-center mb-6">
-                  <Send className="w-5 h-5 text-[#d4a843]" />
-                </div>
-                <p className="font-serif text-xl text-white mb-2">Message envoyé</p>
-                <p className="text-[#7a6f60] text-sm">Nous vous répondrons dans les 48 heures.</p>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-5 p-8 border border-[#d4a843]/20 rounded-xl"
-                style={liquidGlassStyle}
-              >
-                <div className="grid grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Nom</label>
-                    <input
-                      required
-                      value={form.nom}
-                      onChange={e => setForm({ ...form, nom: e.target.value })}
-                      className="w-full bg-transparent border border-[#d4a843]/20 px-4 py-3 text-[#c4b89a] text-sm focus:outline-none focus:border-[#d4a843]/60 placeholder:text-[#4a4035] transition-colors"
-                      placeholder="Votre nom"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Email</label>
-                    <input
-                      required
-                      type="email"
-                      value={form.email}
-                      onChange={e => setForm({ ...form, email: e.target.value })}
-                      className="w-full bg-transparent border border-[#d4a843]/20 px-4 py-3 text-[#c4b89a] text-sm focus:outline-none focus:border-[#d4a843]/60 placeholder:text-[#4a4035] transition-colors"
-                      placeholder="votre@email.fr"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Objet</label>
-                  <input
-                    value={form.sujet}
-                    onChange={e => setForm({ ...form, sujet: e.target.value })}
-                    className="w-full bg-transparent border border-[#d4a843]/20 px-4 py-3 text-[#c4b89a] text-sm focus:outline-none focus:border-[#d4a843]/60 placeholder:text-[#4a4035] transition-colors"
-                    placeholder="Objet de votre demande"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Message</label>
-                  <textarea
-                    required
-                    rows={5}
-                    value={form.message}
-                    onChange={e => setForm({ ...form, message: e.target.value })}
-                    className="w-full bg-transparent border border-[#d4a843]/20 px-4 py-3 text-[#c4b89a] text-sm focus:outline-none focus:border-[#d4a843]/60 placeholder:text-[#4a4035] transition-colors resize-none"
-                    placeholder="Décrivez brièvement votre situation..."
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-4 bg-[#d4a843] text-[#0a0a0a] text-sm tracking-widest uppercase font-semibold hover:bg-[#f0d080] transition-all duration-300 group"
+            <AnimatePresence mode="wait">
+              {sent ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-full flex flex-col items-center justify-center text-center p-12 border border-[#d4a843]/20 rounded-xl"
+                  style={liquidGlassStyle}
                 >
-                  Envoyer ma demande
-                  <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
-                <p className="text-xs text-[#4a4035] text-center">
-                  Vos données sont confidentielles et protégées par le secret professionnel.
-                </p>
-              </form>
-            )}
+                  <motion.div
+                    initial={{ scale: 0, rotate: -30 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 16, delay: 0.1 }}
+                    className="w-16 h-16 border border-[#d4a843] flex items-center justify-center mb-6"
+                  >
+                    <CheckCircle className="w-7 h-7 text-[#d4a843]" />
+                  </motion.div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="font-serif text-xl text-white mb-2"
+                  >
+                    Message envoyé
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45 }}
+                    className="text-[#7a6f60] text-sm"
+                  >
+                    Nous vous répondrons dans les 48 heures.
+                  </motion.p>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit}
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-5 p-8 border border-[#d4a843]/20 rounded-xl"
+                  style={liquidGlassStyle}
+                >
+                  <div className="grid grid-cols-2 gap-5">
+                    {[
+                      { id: 'nom', label: 'Nom', type: 'text', placeholder: 'Votre nom' },
+                      { id: 'email', label: 'Email', type: 'email', placeholder: 'votre@email.fr' },
+                    ].map(({ id, label, type, placeholder }) => (
+                      <div key={id}>
+                        <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">{label}</label>
+                        <motion.input
+                          required
+                          type={type}
+                          value={form[id]}
+                          onChange={e => setForm({ ...form, [id]: e.target.value })}
+                          onFocus={() => setFocused(id)}
+                          onBlur={() => setFocused(null)}
+                          animate={{ borderColor: focused === id ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.2)' }}
+                          className="w-full bg-transparent border px-4 py-3 text-[#c4b89a] text-sm focus:outline-none placeholder:text-[#4a4035] transition-colors"
+                          placeholder={placeholder}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Objet</label>
+                    <motion.input
+                      value={form.sujet}
+                      onChange={e => setForm({ ...form, sujet: e.target.value })}
+                      onFocus={() => setFocused('sujet')}
+                      onBlur={() => setFocused(null)}
+                      animate={{ borderColor: focused === 'sujet' ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.2)' }}
+                      className="w-full bg-transparent border px-4 py-3 text-[#c4b89a] text-sm focus:outline-none placeholder:text-[#4a4035] transition-colors"
+                      placeholder="Objet de votre demande"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs tracking-widest uppercase text-[#6b5f4e] mb-2">Message</label>
+                    <motion.textarea
+                      required
+                      rows={5}
+                      value={form.message}
+                      onChange={e => setForm({ ...form, message: e.target.value })}
+                      onFocus={() => setFocused('message')}
+                      onBlur={() => setFocused(null)}
+                      animate={{ borderColor: focused === 'message' ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.2)' }}
+                      className="w-full bg-transparent border px-4 py-3 text-[#c4b89a] text-sm focus:outline-none placeholder:text-[#4a4035] transition-colors resize-none"
+                      placeholder="Décrivez brièvement votre situation..."
+                    />
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-2 py-4 bg-[#d4a843] text-[#0a0a0a] text-sm tracking-widest uppercase font-semibold"
+                    whileHover={{ scale: 1.02, backgroundColor: '#f0d080' }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Envoyer ma demande
+                    <motion.span
+                      initial={{ x: 0 }}
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    >
+                      <Send className="w-4 h-4" />
+                    </motion.span>
+                  </motion.button>
+
+                  <p className="text-xs text-[#4a4035] text-center">
+                    Vos données sont confidentielles et protégées par le secret professionnel.
+                  </p>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
