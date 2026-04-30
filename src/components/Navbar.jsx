@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const links = [
   { label: 'Accueil', href: '#accueil' },
+  { label: 'Équipe', href: '#collaborateurs' },
   { label: 'Services', href: '#services' },
   { label: 'Le Cabinet', href: '#cabinet' },
   { label: 'Contact', href: '#contact' },
@@ -33,12 +34,11 @@ export default function Navbar() {
         {/* Logo */}
         <motion.a
           href="#accueil"
-          className="flex flex-col"
+          className="flex items-center gap-3"
           whileHover={{ scale: 1.03 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          <span className="font-serif text-lg font-semibold text-[#d4a843] tracking-wide leading-tight">ITOUA LEBO</span>
-          <span className="text-[10px] tracking-[0.3em] text-[#9a7209] uppercase">Cabinet d'Avocats</span>
+          <img src="/logo.png" alt="Cabinet ITOUA LEBO" className="h-12 w-auto object-contain" />
         </motion.a>
 
         {/* Desktop nav */}

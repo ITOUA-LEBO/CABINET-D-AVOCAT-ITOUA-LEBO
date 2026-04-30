@@ -1,6 +1,7 @@
 import './index.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import Collaborateurs from './components/Collaborateurs'
 import ScrollShowcase from './components/ScrollShowcase'
 import Services from './components/Services'
 import About from './components/About'
@@ -14,6 +15,7 @@ export default function App() {
       <GlassFilter />
       <Navbar />
       <Hero />
+      <Collaborateurs />
       <ScrollShowcase />
       <Services />
       <About />
