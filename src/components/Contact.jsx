@@ -4,10 +4,15 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react'
 import { liquidGlassStyle } from './ui/liquid-glass'
 
 const infos = [
-  { icon: MapPin, label: 'Adresse', value: 'Avenue de l\'Indépendance, Brazzaville, Congo' },
-  { icon: Phone, label: 'Téléphone', value: '+242 06 000 00 00' },
-  { icon: Mail, label: 'Email', value: 'contact@itoua-lebo-avocat.cg' },
-  { icon: Clock, label: 'Horaires', value: 'Lun–Ven : 9h–18h' },
+  {
+    icon: MapPin,
+    label: 'Adresse',
+    value: 'Av. Amilcar Cabral, Brazzaville, Congo-Brazzaville',
+    href: 'https://www.google.com/maps/place/Tours+Jumelles+Villarecci/@-4.2758147,15.2809448,17z/data=!3m1!4b1!4m6!3m5!1s0x1a6a33428487d401:0xdcc3498ad8c933cc!8m2!3d-4.2758147!4d15.2835197!16s%2Fg%2F11sbwt08q9?entry=ttu&g_ep=EgoyMDI2MDQyNy4wIKXMDSoASAFQAw%3D%3D',
+  },
+  { icon: Phone, label: 'Téléphone', value: '+242 069 215 817  ·  +242 055 215 817', href: 'tel:+242069215817' },
+  { icon: Mail, label: 'Email', value: 'contact@itoua-lebo-avocat.cg', href: 'mailto:contact@itoua-lebo-avocat.cg' },
+  { icon: Clock, label: 'Horaires', value: 'Lun–Ven : 9h–18h', href: null },
 ]
 
 export default function Contact() {
@@ -70,30 +75,37 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            {infos.map((info, i) => (
-              <motion.div
-                key={info.label}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ x: 6 }}
-                className="flex items-start gap-5 p-5 border border-[#d4a843]/20 rounded-xl transition-colors duration-300 hover:border-[#d4a843]/40 cursor-default"
-                style={liquidGlassStyle}
-              >
-                <motion.div
-                  className="w-10 h-10 border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0"
-                  whileHover={{ borderColor: 'rgba(212,168,67,0.7)', scale: 1.1 }}
-                  transition={{ duration: 0.2 }}
+            {infos.map((info, i) => {
+              const Tag = info.href ? motion.a : motion.div
+              const extra = info.href
+                ? { href: info.href, target: '_blank', rel: 'noopener noreferrer' }
+                : {}
+              return (
+                <Tag
+                  key={info.label}
+                  {...extra}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  whileHover={{ x: 6 }}
+                  className={`flex items-start gap-5 p-5 border border-[#d4a843]/20 rounded-xl transition-colors duration-300 hover:border-[#d4a843]/40 ${info.href ? 'cursor-pointer group' : 'cursor-default'}`}
+                  style={liquidGlassStyle}
                 >
-                  <info.icon className="w-4 h-4 text-[#d4a843]" />
-                </motion.div>
-                <div>
-                  <p className="text-xs tracking-widest uppercase text-[#6b5f4e] mb-1">{info.label}</p>
-                  <p className="text-[#c4b89a] text-sm">{info.value}</p>
-                </div>
-              </motion.div>
-            ))}
+                  <motion.div
+                    className="w-10 h-10 border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0"
+                    whileHover={{ borderColor: 'rgba(212,168,67,0.7)', scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <info.icon className="w-4 h-4 text-[#d4a843]" />
+                  </motion.div>
+                  <div>
+                    <p className="text-xs tracking-widest uppercase text-[#6b5f4e] mb-1">{info.label}</p>
+                    <p className="text-[#c4b89a] text-sm group-hover:text-[#d4a843] transition-colors duration-200">{info.value}</p>
+                  </div>
+                </Tag>
+              )
+            })}
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
