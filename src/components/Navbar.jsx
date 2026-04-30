@@ -38,7 +38,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.03 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          <img src="/logo.png" alt="Cabinet ITOUA LEBO" className="h-12 w-auto object-contain" />
+          <img src="/logo.png" alt="Cabinet ITOUA LEBO" className="h-20 w-auto object-contain" />
         </motion.a>
 
         {/* Desktop nav */}

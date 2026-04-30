@@ -11,6 +11,7 @@ const collaborateurs = [
 ]
 
 const CARD_W = 272 // 256px + 2*8px margin
+const SCROLL_SPEED = 0.25 // px per ms equivalent — lower = slower
 
 function CollabCard({ c }) {
   return (
@@ -73,7 +74,7 @@ export default function Collaborateurs() {
     const current = fromX ?? x.get()
     // distance to complete one full set from current position
     const target = current - TOTAL_W
-    const duration = (TOTAL_W / (CARD_W * 0.8)) // ~speed in seconds
+    const duration = TOTAL_W / (CARD_W * SCROLL_SPEED)
     controls.start({
       x: [current, target],
       transition: { duration, ease: 'linear', repeat: Infinity, repeatType: 'loop' },
